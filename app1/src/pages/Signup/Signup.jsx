@@ -1,9 +1,50 @@
-import React from 'react'
-//import 'E:\hackathon\app1\src\pages\Signup\Signup.jsx'
-//import 'E:\hackathon\app1\src\pages\Signup\Signup.css'
+import React, { useState } from 'react'
+import { toast } from 'react-toastify'
+import { Link } from 'react-router-dom'
 import './Signup.css'
 
 function Signup() {
+const [firstName, setFirstName] = useState('')
+  const [lastName, setLastName] = useState('')
+  const [email, setEmail] = useState('')
+  const [phone, setPhone] = useState('')
+  const [password, setPassword] = useState('')
+  const [confirmPassword, setConfirmPassword] = useState('')
+
+  const onSignup = async () => {
+    if (firstName.length == 0) {
+      toast.warning('please enter first name')
+    } else if (lastName.length == 0) {
+      toast.warning('please enter last name')
+    } else if (email.length == 0) {
+      toast.warning('please enter email')
+    } else if (phone.length == 0) {
+      toast.warning('please enter phone number')
+    } else if (password.length == 0) {
+      toast.warning('please enter password')
+    } else if (confirmPassword.length == 0) {
+      toast.warning('please confirm password')
+    } else if (password != confirmPassword) {
+      toast.warning('password does not match')
+    } else {
+      const response = await signup(
+        firstName,
+        lastName,
+        email,
+        password,
+        phone
+      )
+      if (response['status'] === 'success') {
+        toast.success('Successfully registered user')
+
+        // go to the Login page
+        //navigate('/')
+      } else {
+        toast.error(response['error'])
+      }
+    }
+  }
+
   return (
     <div className='container'>
       <h2 className='page-header'>Signup</h2>
@@ -11,6 +52,7 @@ function Signup() {
         <div className='mb-3'>
           <label htmlFor=''>First Name</label>
           <input
+           onChange={(e) => setFirstName(e.target.value)}
             type='text'
             className='form-control'
           />
@@ -19,6 +61,7 @@ function Signup() {
         <div className='mb-3'>
           <label htmlFor=''>Last Name</label>
           <input
+           onChange={(e) => setLastName(e.target.value)}
             type='text'
             className='form-control'
           />
@@ -27,6 +70,7 @@ function Signup() {
         <div className='mb-3'>
           <label htmlFor=''>Email</label>
           <input
+           onChange={(e) => setEmail(e.target.value)}
             type='email'
             className='form-control'
           />
@@ -35,6 +79,7 @@ function Signup() {
         <div className='mb-3'>
           <label htmlFor=''>Phone Number</label>
           <input
+           onChange={(e) => setPhone(e.target.value)}
             type='tel'
             className='form-control'
           />
@@ -43,6 +88,7 @@ function Signup() {
         <div className='mb-3'>
           <label htmlFor=''>Password</label>
           <input
+          onChange={(e) => setPassword(e.target.value)}
             type='password'
             className='form-control'
           />
@@ -50,19 +96,25 @@ function Signup() {
         <div className='mb-3'>
           <label htmlFor=''>Confirm Password</label>
           <input
+           onChange={(e) => setConfirmPassword(e.target.value)}
             type='password'
             className='form-control'
           />
         </div>
 
         <div>
-          Already have an account?{' '}
-          <button className='btn btn-link'>Sign in</button>
-        </div>
+  Already have an account? <Link to='/'>Signin here</Link>
+         
         <div>
-          <button className='btn btn-success'>Signup</button>
+         <button
+            onClick={onSignup}
+            className='btn btn-success'
+          >
+           Signup
+          </button>
         </div>
       </div>
+    </div>
     </div>
   )
 }
