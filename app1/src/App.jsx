@@ -1,16 +1,24 @@
 
 import './App.css'
-//import Signup from './pages/Signup/Signup'
+import Signup from './pages/Signup/Signup'
 import Signin from './pages/Signin/Signin'
   
 function App() {
 return (
     <div>
-   
-<Signin/>
-
-
-
+    <Routes>
+            <Route
+              path='login'
+              element={<Review />}
+            {/* <Route
+              path='login'
+              element={<Signin />}
+            /> */}
+            {/* <Route
+              path='register'
+              element={<Signup/>}
+            /> */}
+            </Routes>
     </div>
   )
 }
